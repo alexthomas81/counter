@@ -1,26 +1,56 @@
 import React from 'react';
-import logo from './logo.svg';
 import './App.css';
+import { IncrementCount, DecrementCount } from './actions/counter.action';
+import { connect } from 'react-redux';
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+// Container - component : Connected to STORE
+class App extends React.Component {
+
+  state = {
+    count: '0',
+  }
+
+  handleIncrement = () => {
+    const { _IncrementCount } = this.props;
+    _IncrementCount(); // Dispatch an Action
+  }
+
+  handleDecrement = () => {
+    const { _DecrementCount } = this.props;
+    _DecrementCount(); // Dispatch an Action
+  }
+
+  render() {
+    const { count } = this.props;
+    return (
+      <div className="App">Counter....{count}<br></br>
+        <button onClick={this.handleIncrement}>
+          Increment
+          </button>
+        <button onClick={this.handleDecrement}>
+          Decrement
+          </button>
+        <br></br>
+      </div>
+    );
+  }
 }
 
-export default App;
+// Get store to the Componemt
+const mapStoreToProps = (store) => ({
+  count: store.count,
+});
+
+// To dispatch Specific Action written in action.js File
+const mapDispatchToProps = (dispatch) => ({
+  _IncrementCount: () => {
+    dispatch(IncrementCount())
+  },
+  _DecrementCount: () => {
+    dispatch(DecrementCount())
+  },
+});
+
+// connect: Used to connect STORE to the component.
+// Hence, Dispatch and store is availabe in component)
+export default connect(mapStoreToProps, mapDispatchToProps)(App);
