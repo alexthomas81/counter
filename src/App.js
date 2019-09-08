@@ -6,10 +6,6 @@ import { connect } from 'react-redux';
 // Container - component : Connected to STORE
 class App extends React.Component {
 
-  state = {
-    count: '0',
-  }
-
   handleIncrement = () => {
     const { _IncrementCount } = this.props;
     _IncrementCount(); // Dispatch an Action

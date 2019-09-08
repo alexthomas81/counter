@@ -11,6 +11,7 @@ const increment = (state, action) => {
 }
 
 const decrement = (state, action) => {
+    if (state.count === 0) return;
     // using Spread Operators
     return {
         ...state,
